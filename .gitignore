@@ -12,3 +12,10 @@ web-build/
 .DS_Store
 ios/
 android/
+
+# Graphify
+graphify-out/
+
+# Backend
+backend/node_modules/
+backend/.env
