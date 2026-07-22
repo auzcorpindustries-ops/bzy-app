@@ -14,6 +14,7 @@ import paymentsRoutes from './routes/payments.js';
 import aiAgentRoutes from './routes/aiAgent.js';
 import pushRoutes from './routes/push.js';
 import clientRoutes from './routes/client.js';
+import kanbanRoutes from './routes/kanban.js';
 
 const app = express();
 
@@ -50,6 +51,7 @@ app.use('/api/payments', paymentsRoutes);
 app.use('/api/ai-agent', aiAgentRoutes);
 app.use('/api/push', pushRoutes);
 app.use('/client', clientRoutes);
+app.use('/api/kanban', kanbanRoutes);
 
 // ── 404 ──
 app.use((_req, res) => {
