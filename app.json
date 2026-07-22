@@ -1,0 +1,34 @@
+{
+  "expo": {
+    "name": "Bzy",
+    "slug": "bzy",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "scheme": "bzy",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "app.bzy.mobile"
+    },
+    "android": {
+      "package": "app.bzy.mobile",
+      "adaptiveIcon": {
+        "backgroundColor": "#0F0F14"
+      }
+    },
+    "plugins": [
+      "expo-router",
+      "expo-secure-store",
+      [
+        "expo-notifications",
+        {
+          "color": "#0F0F14"
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}
