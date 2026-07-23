@@ -16,7 +16,7 @@ jobs:
           echo "Triggering deploy on EC2..."
           RESPONSE=$(curl -s -w "\n%{http_code}" \
             -X POST \
-            -H "Authorization: Bearer *** secrets.BZY_DEPLOY_TOKEN }}" \
+            -H "Authorization: Bearer ${{ secrets.BZY_DEPLOY_TOKEN }}" \
             -H "Content-Type: application/json" \
             -d '{"branch":"main"}' \
             --max-time 300 \
