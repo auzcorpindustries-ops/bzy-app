@@ -1,0 +1,54 @@
+name: Deploy to EC2
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Trigger EC2 deploy webhook
+        run: |
+          echo "Triggering deploy on EC2..."
+          RESPONSE=$(curl -s -w "\n%{http_code}" \
+            -X POST \
+            -H "Authorization: Bearer *** secrets.BZY_DEPLOY_TOKEN }}" \
+            -H "Content-Type: application/json" \
+            -d '{"branch":"main"}' \
+            --max-time 300 \
+            https://atlas.6845165.xyz/bzy-deploy)
+          
+          HTTP_CODE=$(echo "$RESPONSE" | tail -1)
+          BODY=$(echo "$RESPONSE" | head -n -1)
+          
+          echo "HTTP Status: $HTTP_CODE"
+          echo "Deploy output:"
+          echo "$BODY"
+          
+          if [ "$HTTP_CODE" != "200" ]; then
+            echo "Deploy failed (HTTP $HTTP_CODE)"
+            exit 1
+          fi
+          
+          if echo "$BODY" | grep -q "Deploy complete"; then
+            echo "Deploy successful!"
+          else
+            echo "Deploy may have failed"
+            exit 1
+          fi
+
+      - name: Verify health
+        run: |
+          sleep 3
+          RESPONSE=$(curl -sf https://bzy.6845165.xyz/health || echo "FAILED")
+          echo "Health: $RESPONSE"
+          if echo "$RESPONSE" | grep -q '"ok"'; then
+            echo "Backend healthy"
+          else
+            echo "Health check failed"
+            exit 1
+          fi
